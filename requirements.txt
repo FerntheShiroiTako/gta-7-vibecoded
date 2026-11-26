@@ -1,0 +1,41 @@
+Harbor Heat - requirements
+==========================
+
+This is a Rust project; Cargo installs the crates below automatically on the
+first build. This file lists everything else you need on the machine.
+
+TOOLCHAIN
+---------
+rustup + Rust stable, MSVC target (x86_64-pc-windows-msvc)    https://rustup.rs
+Visual Studio Build Tools 2022 with "Desktop development with C++"  (MSVC linker + Windows SDK)
+
+RUST CRATES (Cargo.toml - fetched by cargo)
+-------------------------------------------
+bevy           = 0.20.1   features: bevy_solari, dlss, wav
+bevy_rapier3d  = 0.37.0
+prettyplease   = 0.2.37   (indirect, pinned in Cargo.lock - newer versions break the DLSS bindings build;
+                           after any `cargo update`, run: cargo update -p prettyplease --precise 0.2.37)
+
+DLSS BUILD (needed for the "dlss" feature; paths set in .cargo/config.toml)
+---------------------------------------------------------------------------
+NVIDIA DLSS SDK   v310.9.1, cloned into ./DLSS        https://github.com/NVIDIA/DLSS
+                  (v310.9.16 loses the GPU device at startup)
+Vulkan SDK        1.4.363.1 -> C:/VulkanSDK/1.4.363.1  https://vulkan.lunarg.com/sdk/home
+libclang          any recent LLVM/clang; LIBCLANG_PATH must point at the folder containing libclang.dll
+                  (this machine uses the Swift toolchain's clang)
+
+To build WITHOUT DLSS instead: remove "dlss" from the bevy features in Cargo.toml and delete the
+DLSS_SDK / VULKAN_SDK / LIBCLANG_PATH lines in .cargo/config.toml. Ray tracing (F4) still works.
+
+HARDWARE / OS
+-------------
+Windows 10/11
+GPU with Vulkan support (raster mode, default)
+GPU with Vulkan ray tracing for the F4 ray-traced mode; NVIDIA RTX for DLSS Ray Reconstruction
+Tested on: RTX 3070 + Ryzen 7 5800X, 32 GB RAM (about 100+ fps raster at 1600x900)
+
+RUNTIME FILES
+-------------
+Segoe UI fonts from C:\Windows\Fonts (standard on Windows; used by the HUD)
+nvngx_dlss.dll + nvngx_dlssd.dll next to the exe (copied automatically by build.rs)
+No other assets: models, textures and sounds are generated in code.

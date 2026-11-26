@@ -1,0 +1,21 @@
+[package]
+name = "harbor_heat"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { version = "0.20.1", features = ["bevy_solari", "dlss", "wav"] }
+bevy_rapier3d = "0.37.0"
+
+[features]
+# Fast iteration: `cargo dev` (alias in .cargo/config.toml) links Bevy dynamically.
+dev = ["bevy/dynamic_linking"]
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+codegen-units = 16

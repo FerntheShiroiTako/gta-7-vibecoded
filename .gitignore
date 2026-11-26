@@ -1,0 +1,5 @@
+/target
+autotest*/
+*.log
+keybinds.cfg
+DLSS/

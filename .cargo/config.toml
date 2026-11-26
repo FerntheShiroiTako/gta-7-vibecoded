@@ -1,0 +1,8 @@
+[alias]
+dev = "run --features dev"
+
+[env]
+# NVIDIA DLSS SDK (cloned into ./DLSS) and the Vulkan SDK, needed to build DLSS Ray Reconstruction
+DLSS_SDK = { value = "DLSS", relative = true }
+VULKAN_SDK = "C:/VulkanSDK/1.4.363.1"
+LIBCLANG_PATH = "C:/Users/vas/AppData/Local/Programs/Swift/Toolchains/6.4.2+Asserts/usr/bin"
